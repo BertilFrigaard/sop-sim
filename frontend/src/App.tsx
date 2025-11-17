@@ -18,7 +18,7 @@ function AppContent() {
                     <BeamList />
                 </div>
             </div>
-            <div>{selectedBeamId && <BeamInspector />}</div>
+            <div>{selectedBeamId !== null && <BeamInspector />}</div>
         </>
     );
 }

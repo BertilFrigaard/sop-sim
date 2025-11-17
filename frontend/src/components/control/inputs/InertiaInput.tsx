@@ -1,4 +1,5 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
+import { useSelection } from "../../../contexts/useSelection";
 
 const inertiaOptions = [
     { name: "H-profil (HEA 160)", value: 1.673e-5 },
@@ -9,7 +10,30 @@ const inertiaOptions = [
 ];
 
 export function InertiaInput() {
-    const [inertia, setInertia] = useState(1000);
+    const [inertia, setInertia] = useState(0);
+    const { getSelectedBeam, updateSelectedBeam } = useSelection();
+
+    const selectedBeam = getSelectedBeam();
+
+    useEffect(() => {
+        if (!selectedBeam) {
+            throw new Error(
+                "getSelectedBeam returned no beam inside input. Input components should only be loaded when selectedBeam != null"
+            );
+        }
+        setInertia(selectedBeam.I);
+    }, [selectedBeam]);
+
+    const updateInertia = (newInertia: number) => {
+        setInertia(newInertia);
+        if (!selectedBeam) {
+            throw new Error(
+                "getSelectedBeam returned no beam inside input. Input components should only be loaded when selectedBeam != null"
+            );
+        }
+        selectedBeam.I = newInertia;
+        updateSelectedBeam(selectedBeam);
+    };
     return (
         <div>
             <p className="font-bold">I | Inertimoment </p>
@@ -17,7 +41,7 @@ export function InertiaInput() {
                 className="block"
                 value={inertia}
                 onChange={(event) => {
-                    setInertia(Number(event.target.value));
+                    updateInertia(Number(event.target.value));
                 }}
             >
                 {inertiaOptions.map((v) => (
@@ -25,14 +49,14 @@ export function InertiaInput() {
                         {v.name}
                     </option>
                 ))}
-                {inertia !== 10 && inertia !== 20 && <option value={inertia}>Brugerdefineret</option>}
+                {!inertiaOptions.find((v) => v.value == inertia) && <option value={inertia}>Brugerdefineret</option>}
             </select>
             <input
                 className="bg-gray-100"
                 type="number"
                 value={inertia}
                 onChange={(event) => {
-                    setInertia(Number(event.target.value));
+                    updateInertia(Number(event.target.value));
                 }}
             />
         </div>

@@ -21,7 +21,13 @@ export function BeamList() {
             </button>
             <ul>
                 {beams.map((beam) => (
-                    <li key={beam.id}>
+                    <li
+                        key={beam.id}
+                        className="bg-teal-100 m-2 px-3 py-1 rounded-lg cursor-pointer"
+                        onClick={() => {
+                            setSelectedBeamId(beam.id);
+                        }}
+                    >
                         {beam.id}: {beam.F}
                     </li>
                 ))}
