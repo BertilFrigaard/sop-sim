@@ -1,11 +1,10 @@
-import { useContext, useState } from "react";
-import { BeamsContext } from "../../contexts/BeamsContext";
-import { ForceInput } from "./inputs/ForceInput";
-import { InertiaInput } from "./inputs/InertiaInput";
+import { useSelection } from "../../contexts/useSelection";
+import { getDefaultBeam } from "../../lib/physics/beamDefaults";
+import { useBeams } from "../../contexts/useBeams";
 
 export function BeamList() {
-    const [addBeam, setAddBeam] = useState(false);
-    const beams = useContext(BeamsContext);
+    const { setSelectedBeamId } = useSelection();
+    const { beams, addBeam, getUniqueBeamId } = useBeams();
 
     return (
         <div>
@@ -13,29 +12,17 @@ export function BeamList() {
             <button
                 className="bg-teal-300 px-5 rounded-lg"
                 onClick={() => {
-                    setAddBeam(!addBeam);
+                    const beamId = getUniqueBeamId();
+                    addBeam(getDefaultBeam(beamId));
+                    setSelectedBeamId(beamId);
                 }}
             >
-                Add
+                Create New Beam
             </button>
-            {addBeam && (
-                <div>
-                    <ForceInput />
-                    <InertiaInput />
-                    <button
-                        className="bg-teal-100 px-5 rounded-lg"
-                        onClick={() => {
-                            console.log("CLICK");
-                        }}
-                    >
-                        Add Beam
-                    </button>
-                </div>
-            )}
             <ul>
-                {beams.map((beam, i) => (
-                    <li>
-                        {i}: {beam.F}
+                {beams.map((beam) => (
+                    <li key={beam.id}>
+                        {beam.id}: {beam.F}
                     </li>
                 ))}
             </ul>

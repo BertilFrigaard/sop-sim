@@ -4,6 +4,7 @@ export type BeamDataPoint = {
 };
 
 export type Beam = {
+    id: number;
     F: number;
     E: number;
     I: number;
