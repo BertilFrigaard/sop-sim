@@ -13,8 +13,8 @@ export function BeamInspector() {
     }, [getSelectedBeam]);
 
     return (
-        <div>
-            <h1>Beam Inspector (Beam ID: {beam ? beam.id : "Loading"})</h1>
+        <div className="bg-gray-50 border-2 border-gray-200 p-5">
+            <h2 className="text-2xl font-bold">Beam Inspector (Beam ID: {beam ? beam.id : "Loading"})</h2>
             <div className="flex gap-5 p-5">
                 <BeamInput title="F | Belastning [N]" param="F" options={null} />
                 <BeamInput title="L | Længde [M]" param="L" options={null} />

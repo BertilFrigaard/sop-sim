@@ -38,11 +38,11 @@ export function BeamInput({
     };
 
     return (
-        <div>
+        <div className="bg-white p-2 rounded-md border-2 border-gray-200 space-y-2">
             <p className="font-bold">{title}</p>
             {options && (
                 <select
-                    className="block"
+                    className="block border-2 border-gray-200 rounded-md"
                     value={value}
                     onChange={(event) => {
                         updateValue(Number(event.target.value));
@@ -57,7 +57,7 @@ export function BeamInput({
                 </select>
             )}
             <input
-                className="bg-gray-100"
+                className="border-2 border-gray-200 rounded-md w-full"
                 type="number"
                 value={value}
                 onChange={(event) => {
