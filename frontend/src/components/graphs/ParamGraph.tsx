@@ -38,8 +38,7 @@ export function ParamGraph() {
 
     useEffect(() => {
         if (beamParam == null) {
-            setSeries([]);
-            //throw Error("ParamGraph updated while beamParam = null. This is not allowed");
+            return;
         }
         const seriesBuild = [] as UserSerie<DataPoint>[];
 
@@ -73,10 +72,19 @@ export function ParamGraph() {
 
     const primaryAxis = useMemo((): AxisOptions<DataPoint> => ({ getValue: (point) => point.x }), []);
     const secondaryAxes = useMemo((): AxisOptions<DataPoint>[] => [{ getValue: (point) => point.y }], []);
+
     if (series.length == 0) {
         return (
             <div className="text-center h-full bg-gray-50 border-2 border-gray-200">
                 <p className="pt-20 text-xl font-semibold">Tilføj en bjælke for at begynde</p>
+            </div>
+        );
+    }
+
+    if (beamParam == null) {
+        return (
+            <div className="text-center h-full bg-gray-50 border-2 border-gray-200">
+                <p className="pt-20 text-xl font-semibold">Loader</p>
             </div>
         );
     }
