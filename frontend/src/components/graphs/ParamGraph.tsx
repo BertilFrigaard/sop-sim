@@ -17,6 +17,7 @@ export function ParamGraph() {
     const { graphState } = useGraphState();
 
     useEffect(() => {
+        // TODO use util function for this
         switch (graphState) {
             case "XY":
                 setBeamParam(null);

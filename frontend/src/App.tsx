@@ -1,6 +1,7 @@
 import "./App.css";
 import { BeamInspector } from "./components/control/BeamInspector";
 import { BeamList } from "./components/control/BeamList";
+import { ParamInspector } from "./components/control/ParamInspector";
 import { ViewSelector } from "./components/control/ViewSelector";
 import { BeamGraph } from "./components/graphs/BeamGraph";
 import { ParamGraph } from "./components/graphs/ParamGraph";
@@ -15,29 +16,18 @@ function AppContent() {
     const { selectedBeamId } = useSelection();
     const { graphState } = useGraphState();
 
-    const getGraph = () => {
-        if (graphState == "XY") {
-            return <BeamGraph />;
-        } else {
-            return <ParamGraph />;
-        }
-    };
-
     return (
         <div className="p-2">
             <div className="h-150 flex space-x-2">
-                <div className="h-full w-full flex-2">{getGraph()}</div>
+                <div className="h-full w-full flex-2">{graphState == "XY" ? <BeamGraph /> : <ParamGraph />}</div>
                 <div className="h-full w-full min-w-50 flex-1">
                     <BeamList />
                 </div>
             </div>
             <div className="flex space-x-2 mt-2">
-                <div className="flex-1">
-                    <ViewSelector />
-                </div>
-                <div className="flex-5">
-                    <div>{selectedBeamId !== null && <BeamInspector />}</div>
-                </div>
+                <ViewSelector />
+                {graphState !== "XY" && <ParamInspector />}
+                {selectedBeamId !== null && <BeamInspector />}
             </div>
         </div>
     );
