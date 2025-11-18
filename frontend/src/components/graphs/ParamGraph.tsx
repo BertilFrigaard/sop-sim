@@ -5,6 +5,7 @@ import { getDeflection } from "../../lib/physics/beamCalculations";
 import { useBeams } from "../../contexts/useBeams";
 import { useSelection } from "../../contexts/useSelection";
 import { useGraphState } from "../../contexts/useGraphState";
+import { getBeamKeyFromState } from "../../lib/utils/stateConverters";
 
 const STEPS = 100;
 
@@ -17,24 +18,7 @@ export function ParamGraph() {
     const { graphState } = useGraphState();
 
     useEffect(() => {
-        // TODO use util function for this
-        switch (graphState) {
-            case "XY":
-                setBeamParam(null);
-                break;
-            case "F_VMAX":
-                setBeamParam("F");
-                break;
-            case "E_VMAX":
-                setBeamParam("E");
-                break;
-            case "I_VMAX":
-                setBeamParam("I");
-                break;
-            case "L_VMAX":
-                setBeamParam("L");
-                break;
-        }
+        setBeamParam(getBeamKeyFromState(graphState));
     }, [graphState]);
 
     useEffect(() => {
