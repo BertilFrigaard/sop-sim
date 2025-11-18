@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import { useSelection } from "../../../contexts/useSelection";
 import type { Beam } from "../../../types/beamTypes";
 import type { InputOptions } from "../../../types/componentTypes";
+import { BaseInput } from "./BaseInput";
 
 export function BeamInput({
     title,
@@ -37,33 +38,5 @@ export function BeamInput({
         updateSelectedBeam(selectedBeam);
     };
 
-    return (
-        <div className="bg-white p-2 rounded-md border-2 border-gray-200 space-y-2">
-            <p className="font-bold">{title}</p>
-            {options && (
-                <select
-                    className="block border-2 border-gray-200 rounded-md"
-                    value={value}
-                    onChange={(event) => {
-                        updateValue(Number(event.target.value));
-                    }}
-                >
-                    {options.map((v) => (
-                        <option key={v.name} value={v.value}>
-                            {v.name}
-                        </option>
-                    ))}
-                    {!options.find((v) => v.value == value) && <option value={value}>Brugerdefineret</option>}
-                </select>
-            )}
-            <input
-                className="border-2 border-gray-200 rounded-md w-full"
-                type="number"
-                value={value}
-                onChange={(event) => {
-                    updateValue(Number(event.target.value));
-                }}
-            />
-        </div>
-    );
+    return <BaseInput title={title} options={options} value={value} updateValue={updateValue} />;
 }
