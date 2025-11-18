@@ -15,11 +15,11 @@ export function BeamInspector() {
     return (
         <div className="bg-gray-50 border-2 border-gray-200 p-5 w-full">
             <h2 className="text-2xl font-bold">Beam Inspector (Beam ID: {beam ? beam.id : "Loading"})</h2>
-            <div className="flex gap-5 p-5 flex-wrap">
+            <div className="flex gap-5 pt-5 flex-wrap">
                 <BeamInput title="F | Belastning [N]" param="F" options={null} />
                 <BeamInput title="L | Længde [M]" param="L" options={null} />
                 <BeamInput title="E | Elasticitetsmodul [Pa]" param="E" options={defaultElasticModulus} />
-                <BeamInput title="I | Inertimoment [kg*m*m]" param="I" options={defaultInertias} />
+                <BeamInput title="I | Inertimoment [kg*m^4]" param="I" options={defaultInertias} />
             </div>
         </div>
     );

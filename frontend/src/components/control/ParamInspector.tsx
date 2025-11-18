@@ -20,7 +20,7 @@ export function ParamInspector() {
     return (
         <div className="bg-gray-50 border-2 border-gray-200 p-5">
             <h2 className="text-2xl font-bold">Param Inspector (Param: {beamParam ? beamParam : "?"})</h2>
-            <div className="space-y-5 p-5">
+            <div className="space-y-5 pt-5">
                 {beamParam ? (
                     <>
                         <ParamBoundInput title="Øvre Loft" param={beamParam} bound="upper" />

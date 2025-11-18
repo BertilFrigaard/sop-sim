@@ -26,14 +26,30 @@ export function BeamList() {
                     <li
                         key={beam.id}
                         className={
-                            "border-2 border-gray-200 px-5 rounded-md cursor-pointer hover:border-gray-300 " +
+                            "border-2 border-gray-200 px-5 rounded-md cursor-pointer hover:border-gray-300 flex items-center gap-5 " +
                             (selectedBeamId == beam.id ? "bg-amber-50" : "bg-white")
                         }
                         onClick={() => {
                             setSelectedBeamId(beam.id);
                         }}
                     >
-                        Beam {beam.id} F: {beam.F} E: {beam.E} I: {beam.I} L : {beam.L}
+                        <p className="font-semibold">Beam {beam.id}</p>
+                        <div>
+                            <p>
+                                F: {beam.F} <span className="text-gray-600">N</span>
+                            </p>
+                            <p>
+                                L: {beam.L} <span className="text-gray-600">m</span>
+                            </p>
+                        </div>
+                        <div>
+                            <p>
+                                I: {beam.I} <span className="text-gray-600">kg*m^4</span>
+                            </p>
+                            <p>
+                                E: {beam.E} <span className="text-gray-600">Pa</span>
+                            </p>
+                        </div>
                     </li>
                 ))}
             </ul>
