@@ -1,33 +1,67 @@
 import { useEffect, useMemo, useState } from "react";
-import type { DataPoint } from "../../types/beamTypes";
+import type { Beam, DataPoint } from "../../types/beamTypes";
 import { Chart, type AxisOptions, type UserSerie } from "react-charts";
 import { getDeflection } from "../../lib/physics/beamCalculations";
 import { useBeams } from "../../contexts/useBeams";
 import { useSelection } from "../../contexts/useSelection";
+import { useGraphState } from "../../contexts/useGraphState";
 
 const STEPS = 100;
 
 export function ParamGraph() {
     const [series, setSeries] = useState<UserSerie<DataPoint>[]>([]);
+    const [beamParam, setBeamParam] = useState<keyof Beam | null>(null);
 
     const { beams } = useBeams();
     const { paramBounds } = useSelection();
-
-    console.log("ParamBounds: ", paramBounds);
+    const { graphState } = useGraphState();
 
     useEffect(() => {
+        switch (graphState) {
+            case "XY":
+                setBeamParam(null);
+                break;
+            case "F_VMAX":
+                setBeamParam("F");
+                break;
+            case "E_VMAX":
+                setBeamParam("E");
+                break;
+            case "I_VMAX":
+                setBeamParam("I");
+                break;
+            case "L_VMAX":
+                setBeamParam("L");
+                break;
+        }
+    }, [graphState]);
+
+    useEffect(() => {
+        if (beamParam == null) {
+            setSeries([]);
+            //throw Error("ParamGraph updated while beamParam = null. This is not allowed");
+        }
         const seriesBuild = [] as UserSerie<DataPoint>[];
 
         for (let i = 0; i < beams.length; i++) {
             const beam = beams[i];
+
+            const increment = (paramBounds.upper - paramBounds.lower) / STEPS;
             const data = {
                 label: "Beam " + beam.id,
                 data: Array.from(
                     { length: STEPS },
                     (_, i) =>
                         ({
-                            x: (beam.L / STEPS) * i,
-                            y: -1 * getDeflection((beam.L / STEPS) * i, beam.F, beam.E, beam.I, beam.L),
+                            x: paramBounds.lower + increment * i,
+                            y:
+                                -1 *
+                                getDeflection(
+                                    beamParam == "L" ? paramBounds.lower + increment * i : beam.L,
+                                    beamParam == "F" ? paramBounds.lower + increment * i : beam.F,
+                                    beamParam == "E" ? paramBounds.lower + increment * i : beam.E,
+                                    beamParam == "I" ? paramBounds.lower + increment * i : beam.I
+                                ),
                         } as DataPoint)
                 ),
             };
@@ -35,7 +69,7 @@ export function ParamGraph() {
         }
 
         setSeries(seriesBuild);
-    }, [beams]);
+    }, [beams, beamParam, paramBounds]);
 
     const primaryAxis = useMemo((): AxisOptions<DataPoint> => ({ getValue: (point) => point.x }), []);
     const secondaryAxes = useMemo((): AxisOptions<DataPoint>[] => [{ getValue: (point) => point.y }], []);

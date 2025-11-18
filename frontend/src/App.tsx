@@ -16,17 +16,10 @@ function AppContent() {
     const { graphState } = useGraphState();
 
     const getGraph = () => {
-        switch (graphState) {
-            case "XY":
-                return <BeamGraph />;
-            case "F_VMAX":
-                return <ParamGraph />;
-            case "E_VMAX":
-                throw new Error("NOT IMPLEMENTED");
-            case "I_VMAX":
-                throw new Error("NOT IMPLEMENTED");
-            case "L_VMAX":
-                throw new Error("NOT IMPLEMENTED");
+        if (graphState == "XY") {
+            return <BeamGraph />;
+        } else {
+            return <ParamGraph />;
         }
     };
 
