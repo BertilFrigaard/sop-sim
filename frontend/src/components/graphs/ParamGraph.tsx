@@ -3,13 +3,17 @@ import type { DataPoint } from "../../types/beamTypes";
 import { Chart, type AxisOptions, type UserSerie } from "react-charts";
 import { getDeflection } from "../../lib/physics/beamCalculations";
 import { useBeams } from "../../contexts/useBeams";
+import { useSelection } from "../../contexts/useSelection";
 
 const STEPS = 100;
 
-export function BeamGraph() {
+export function ParamGraph() {
     const [series, setSeries] = useState<UserSerie<DataPoint>[]>([]);
 
     const { beams } = useBeams();
+    const { paramBounds } = useSelection();
+
+    console.log("ParamBounds: ", paramBounds);
 
     useEffect(() => {
         const seriesBuild = [] as UserSerie<DataPoint>[];

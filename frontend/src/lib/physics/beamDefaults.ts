@@ -47,5 +47,5 @@ export const defaultInertias = [
 ];
 
 export function getDefaultBeam(id: number) {
-    return { id: id, F: 2000, E: defaultElasticModulus[1].value, I: defaultInertias[1].value, L: 18 } as Beam;
+    return { id: id, F: 2000, E: defaultElasticModulus[1].value, I: defaultInertias[1].value, L: 8 } as Beam;
 }

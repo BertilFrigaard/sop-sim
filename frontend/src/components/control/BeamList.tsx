@@ -3,7 +3,7 @@ import { getDefaultBeam } from "../../lib/physics/beamDefaults";
 import { useBeams } from "../../contexts/useBeams";
 
 export function BeamList() {
-    const { setSelectedBeamId } = useSelection();
+    const { selectedBeamId, setSelectedBeamId } = useSelection();
     const { beams, addBeam, getUniqueBeamId } = useBeams();
 
     return (
@@ -25,7 +25,10 @@ export function BeamList() {
                 {beams.map((beam) => (
                     <li
                         key={beam.id}
-                        className="bg-white border-2 border-gray-200 px-5 rounded-md cursor-pointer hover:border-gray-300"
+                        className={
+                            "border-2 border-gray-200 px-5 rounded-md cursor-pointer hover:border-gray-300 " +
+                            (selectedBeamId == beam.id ? "bg-amber-50" : "bg-white")
+                        }
                         onClick={() => {
                             setSelectedBeamId(beam.id);
                         }}

@@ -1,4 +1,4 @@
-export type BeamDataPoint = {
+export type DataPoint = {
     x: number;
     y: number;
 };
