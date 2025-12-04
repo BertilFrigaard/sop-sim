@@ -36,7 +36,7 @@ export function BeamInspector() {
                 <BeamInput title="F | Belastning [N]" param="F" options={null} />
                 <BeamInput title="L | Længde [M]" param="L" options={null} />
                 <BeamInput title="E | Elasticitetsmodul [Pa]" param="E" options={defaultElasticModulus} />
-                <BeamInput title="I | Inertimoment [kg*m^4]" param="I" options={defaultInertias} />
+                <BeamInput title="I | Inertimoment [m^4]" param="I" options={defaultInertias} />
             </div>
         </div>
     );

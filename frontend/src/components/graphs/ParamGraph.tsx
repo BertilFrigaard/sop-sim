@@ -6,6 +6,7 @@ import { useBeams } from "../../contexts/useBeams";
 import { useSelection } from "../../contexts/useSelection";
 import { useGraphState } from "../../contexts/useGraphState";
 import { getBeamKeyFromState } from "../../lib/utils/stateConverters";
+import { formatElasticity, formatInertia, formatMeters, formatNewtons } from "../../lib/physics/unitFormatters";
 
 const STEPS = 100;
 
@@ -55,8 +56,41 @@ export function ParamGraph() {
         setSeries(seriesBuild);
     }, [beams, beamParam, paramBounds]);
 
-    const primaryAxis = useMemo((): AxisOptions<DataPoint> => ({ getValue: (point) => point.x }), []);
-    const secondaryAxes = useMemo((): AxisOptions<DataPoint>[] => [{ getValue: (point) => point.y }], []);
+    const primaryAxis = useMemo(
+        (): AxisOptions<DataPoint> => ({
+            getValue: (point: DataPoint) => point.x,
+            formatters:
+                beamParam === "F"
+                    ? {
+                          scale: formatNewtons,
+                          tooltip: formatNewtons,
+                      }
+                    : beamParam === "E"
+                    ? {
+                          scale: formatElasticity,
+                          tooltip: formatElasticity,
+                      }
+                    : beamParam === "I"
+                    ? {
+                          scale: formatInertia,
+                          tooltip: formatInertia,
+                      }
+                    : beamParam === "L"
+                    ? {
+                          scale: formatMeters,
+                          tooltip: formatMeters,
+                      }
+                    : undefined,
+        }),
+        [beamParam]
+    );
+
+    const secondaryAxes = useMemo(
+        (): AxisOptions<DataPoint>[] => [
+            { getValue: (point) => point.y, formatters: { scale: formatMeters, tooltip: formatMeters } },
+        ],
+        []
+    );
 
     if (series.length == 0) {
         return (

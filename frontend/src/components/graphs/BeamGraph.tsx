@@ -3,6 +3,7 @@ import type { DataPoint } from "../../types/beamTypes";
 import { Chart, type AxisOptions, type UserSerie } from "react-charts";
 import { getDeflection } from "../../lib/physics/beamCalculations";
 import { useBeams } from "../../contexts/useBeams";
+import { formatMeters } from "../../lib/physics/unitFormatters";
 
 const STEPS = 100;
 
@@ -33,8 +34,29 @@ export function BeamGraph() {
         setSeries(seriesBuild);
     }, [beams]);
 
-    const primaryAxis = useMemo((): AxisOptions<DataPoint> => ({ getValue: (point) => point.x }), []);
-    const secondaryAxes = useMemo((): AxisOptions<DataPoint>[] => [{ getValue: (point) => point.y }], []);
+    const primaryAxis = useMemo(
+        (): AxisOptions<DataPoint> => ({
+            getValue: (point) => point.x,
+            formatters: {
+                scale: formatMeters,
+                tooltip: formatMeters,
+            },
+        }),
+        []
+    );
+    const secondaryAxes = useMemo(
+        (): AxisOptions<DataPoint>[] => [
+            {
+                getValue: (point) => point.y,
+                formatters: {
+                    scale: formatMeters,
+                    tooltip: formatMeters,
+                },
+            },
+        ],
+        []
+    );
+
     if (series.length == 0) {
         return (
             <div className="text-center h-full bg-gray-50 border-2 border-gray-200">
