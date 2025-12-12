@@ -1,9 +1,10 @@
 import { useEffect, useMemo, useState } from "react";
 import type { DataPoint } from "../../types/beamTypes";
-import { Chart, type AxisOptions, type UserSerie } from "react-charts";
+import { type AxisOptions, type UserSerie } from "react-charts";
 import { getDeflection } from "../../lib/physics/beamCalculations";
 import { useBeams } from "../../contexts/useBeams";
 import { formatMeters } from "../../lib/physics/unitFormatters";
+import { Graph } from "./Graph";
 
 const STEPS = 100;
 
@@ -66,6 +67,13 @@ export function BeamGraph() {
     }
 
     return (
-        <Chart className="border-2 border-gray-200 bg-gray-50" options={{ data: series, primaryAxis, secondaryAxes }} />
+        <Graph
+            series={series}
+            primaryAxis={primaryAxis}
+            secondaryAxes={secondaryAxes}
+            primaryAxisTitle="Strækning x"
+            secondaryAxesTitle="Nedbøjning v"
+            styles="-left-6"
+        />
     );
 }
