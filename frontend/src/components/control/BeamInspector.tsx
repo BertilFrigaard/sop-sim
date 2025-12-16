@@ -1,4 +1,3 @@
-import { useState } from "react";
 import { useSelection } from "../../contexts/useSelection";
 import { BeamInput } from "./inputs/BeamInput";
 import { defaultElasticModulus, defaultInertias } from "../../lib/physics/beamDefaults";
@@ -9,8 +8,9 @@ import { download, generateCsv } from "export-to-csv";
 
 export function BeamInspector() {
     const { getSelectedBeam, setSelectedBeamId } = useSelection();
-    const [beam] = useState(getSelectedBeam);
     const { setBeams } = useBeams();
+
+    const beam = getSelectedBeam();
 
     if (!beam) {
         return null;
@@ -39,7 +39,6 @@ export function BeamInspector() {
                                 x: (beam.L / STEPS) * i,
                                 y: -1 * getDeflection((beam.L / STEPS) * i, beam.F, beam.E, beam.I, beam.L),
                             }));
-                            console.log(data);
                             const csv = generateCsv({ useKeysAsHeaders: true })(data);
                             download({ useKeysAsHeaders: true, filename: "Bjælke_" + beam.id })(csv);
                         }}

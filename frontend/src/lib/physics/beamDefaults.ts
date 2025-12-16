@@ -3,7 +3,7 @@ import type { Beam } from "../../types/beamTypes";
 export const defaultElasticModulus = [
     // In GPa
     {
-        name: "Diamond ",
+        name: "Diamant ",
         value: 1220e9,
     },
     {
