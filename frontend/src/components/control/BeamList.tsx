@@ -33,7 +33,7 @@ export function BeamList() {
                             setSelectedBeamId(beam.id);
                         }}
                     >
-                        <p className="font-semibold">Beam {beam.id}</p>
+                        <p className="font-semibold">Bjælke {beam.id}</p>
                         <div>
                             <p>
                                 F: {beam.F} <span className="text-gray-600">N</span>
@@ -44,7 +44,7 @@ export function BeamList() {
                         </div>
                         <div>
                             <p>
-                                I: {beam.I} <span className="text-gray-600">kg*m^4</span>
+                                I: {beam.I} <span className="text-gray-600">m^4</span>
                             </p>
                             <p>
                                 E: {beam.E} <span className="text-gray-600">Pa</span>

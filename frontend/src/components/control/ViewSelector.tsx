@@ -13,7 +13,7 @@ export function ViewSelector() {
     const { graphState, updateGraphState } = useGraphState();
     return (
         <div className="bg-gray-50 border-2 border-gray-200 p-5">
-            <h2 className="text-2xl font-bold">Graf Type</h2>
+            <h2 className="text-2xl font-bold">Graf Tilstand</h2>
             <div className="mt-5 space-y-2">
                 {VIEWS.map((v) => (
                     <button

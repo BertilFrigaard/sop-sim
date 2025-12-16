@@ -27,11 +27,16 @@ export function ParamGraph() {
         if (beamParam == null) {
             return;
         }
+
+        // Liste af serie af datapunkter
+        // Cast til type som er kompatibel med react-charts
         const seriesBuild = [] as UserSerie<DataPoint>[];
 
+        // Lav en serie af datapunkter for hver bjælke
         for (let i = 0; i < beams.length; i++) {
             const beam = beams[i];
 
+            // Bestem incrementet baseret på den variables interval
             const increment = (paramBounds.upper - paramBounds.lower) / STEPS;
             const data = {
                 label: "Beam " + beam.id,
@@ -41,7 +46,11 @@ export function ParamGraph() {
                         ({
                             x: paramBounds.lower + increment * i,
                             y:
+                                // Gang med -1 for at vende y-aksen
+                                // Tal formatering sker i unitFormatters MANGLER
                                 -1 *
+                                // Hold 3 parametrer konstante, og brug den sidste som variabel
+                                // Undlad parameter L da funktionen så returnere maksimal nedbøjning
                                 getDeflection(
                                     beamParam == "L" ? paramBounds.lower + increment * i : beam.L,
                                     beamParam == "F" ? paramBounds.lower + increment * i : beam.F,
@@ -51,6 +60,8 @@ export function ParamGraph() {
                         } as DataPoint)
                 ),
             };
+
+            // Tilføj serie af datapunkter til liste af serier
             seriesBuild.push(data);
         }
 

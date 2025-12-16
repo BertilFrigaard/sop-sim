@@ -14,10 +14,16 @@ export function BeamGraph() {
     const { beams } = useBeams();
 
     useEffect(() => {
+        // Liste af serie af datapunkter
+        // Cast til type som er kompatibel med react-charts
         const seriesBuild = [] as UserSerie<DataPoint>[];
 
+        // Lav en serie af datapunkter for hver bjælke
         for (let i = 0; i < beams.length; i++) {
             const beam = beams[i];
+
+            // lav serie af datapunkter med x som variabel,
+            // og F, E, I og L som konstanter
             const data = {
                 label: "Beam " + beam.id,
                 data: Array.from(
@@ -29,6 +35,8 @@ export function BeamGraph() {
                         } as DataPoint)
                 ),
             };
+
+            // Tilføj serie af datapunkter til liste af serier
             seriesBuild.push(data);
         }
 
