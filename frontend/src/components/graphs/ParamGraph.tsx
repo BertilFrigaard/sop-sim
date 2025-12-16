@@ -8,8 +8,7 @@ import { useGraphState } from "../../contexts/useGraphState";
 import { getBeamKeyFromState } from "../../lib/utils/stateConverters";
 import { formatElasticity, formatInertia, formatMeters, formatNewtons } from "../../lib/physics/unitFormatters";
 import { Graph } from "./Graph";
-
-const STEPS = 100;
+import { STEPS } from "../../lib/Constants";
 
 export function ParamGraph() {
     const [series, setSeries] = useState<UserSerie<DataPoint>[]>([]);
@@ -39,7 +38,7 @@ export function ParamGraph() {
             // Bestem incrementet baseret på den variables interval
             const increment = (paramBounds.upper - paramBounds.lower) / STEPS;
             const data = {
-                label: "Beam " + beam.id,
+                label: "Bjælke " + beam.id,
                 data: Array.from(
                     { length: STEPS },
                     (_, i) =>

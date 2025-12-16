@@ -5,8 +5,7 @@ import { getDeflection } from "../../lib/physics/beamCalculations";
 import { useBeams } from "../../contexts/useBeams";
 import { formatMeters } from "../../lib/physics/unitFormatters";
 import { Graph } from "./Graph";
-
-const STEPS = 100;
+import { STEPS } from "../../lib/Constants";
 
 export function BeamGraph() {
     const [series, setSeries] = useState<UserSerie<DataPoint>[]>([]);
@@ -25,7 +24,7 @@ export function BeamGraph() {
             // lav serie af datapunkter med x som variabel,
             // og F, E, I og L som konstanter
             const data = {
-                label: "Beam " + beam.id,
+                label: "Bjælke " + beam.id,
                 data: Array.from(
                     { length: STEPS },
                     (_, i) =>
