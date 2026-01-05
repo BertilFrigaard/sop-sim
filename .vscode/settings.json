@@ -1,7 +1,5 @@
 {
     "files.exclude": {
-        "**/node_modules": true,
-        "**/*config*": true,
-        "**/*package*": true
+        "**/node_modules": true
     }
 }
